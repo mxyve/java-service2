@@ -1,14 +1,15 @@
+
 # 构建阶段
-FROM openjdk:17-jdk-slim AS build
+FROM openjdk:17-slim AS build
 ENV HOME=/usr/app
-RUN mkdir -p HOME
+RUN mkdir -p $HOME
 WORKDIR $HOME
-AND . WORKDIR
+ADD . $HOME
 RUN --mount=type=cache,target=/root/.m2 ./mvnw -f $HOME/pom.xml clean package
 
-#运行阶段
+# 打包阶段
 FROM openjdk:17-slim
 ARG JAR_FILE=/usr/app/target/*.jar
-COPY --from=build $JAR_FILE /app.runner.jar
+COPY --from=build $JAR_FILE /app/runner.jar
 EXPOSE 8082
-ENTRYPOINT java-jar/app.runner.jar
+ENTRYPOINT java -jar /app/runner.jar
