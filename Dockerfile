@@ -12,5 +12,5 @@ RUN --mount=type=cache,target=/root/.m2 ./mvnw -f $HOME/pom.xml clean package
 FROM openjdk:17-slim
 ARG JAR_FILE=/usr/app/target/*.jar
 COPY --from=build $JAR_FILE /app/runner.jar
-EXPOSE 8082
+EXPOSE 8021
 ENTRYPOINT java -jar /app/runner.jar
