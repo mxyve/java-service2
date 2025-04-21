@@ -1,4 +1,3 @@
-
 # 构建阶段
 FROM openjdk:17-slim AS build
 ENV HOME=/usr/app
